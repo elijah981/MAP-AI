@@ -1,0 +1,73 @@
+.cat {
+  background-color: #e8f5e9; /* Light green */
+}
+
+.sub_cat {
+  background-color: #fce4ec; /* Lighter pink */
+}
+
+.bold-text {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Reduce spacing between rows */
+table.steptable tbody tr {
+  margin-bottom: 1px;
+  padding: 0.2rem;
+}
+
+/* CSS for highlight tags */
+.highlight {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+/* CSS for highlight tag with id="1" */
+.highlight[id="1"] {
+  background-color: yellow;
+}
+
+/* CSS for highlight tag with id="2" */
+.highlight[id="2"] {
+  background-color: lightblue;
+}
+
+/* CSS for highlight tag with id="3" */
+.highlight[id="3"] {
+  background-color: lightgreen;
+}
+
+/* CSS for highlight tag with id="4" */
+.highlight[id="4"] {
+  background-color: pink;
+}
+
+/* CSS for highlight tag with id="5" */
+.highlight[id="5"] {
+  background-color: orange;
+}
+
+.custom-outline {
+  border: 1px solid lightgray;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.tooltipster-shadow {
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.button-container button {
+  margin: 0 5px;
+}

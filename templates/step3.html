@@ -1,0 +1,150 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container" style="max-width: 90%">
+  <form action="/step3/add" method="POST">
+    <span id="summaryLabel"></span>
+    <button class="btn btn-primary" id="summaryButton" onclick="goToSummary()">
+      Summary
+    </button>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">Select Achievement</h4>
+          </div>
+          <div class="panel-body">
+            <select
+              name="selected_achievement"
+              id="selected_achievement"
+              class="form-control"
+              onchange="showAchievement()"
+            >
+              {% for achievement in step2_entries %}
+              <option value="{{ achievement[1] }}">{{ achievement[7] }}</option>
+              {% endfor %}
+            </select>
+            <!-- Add a hidden input field for selected_achievement -->
+            <input
+              type="hidden"
+              name="selected_achievement"
+              id="selected_achievement_input"
+            />
+            <input type="hidden" name="reanalyze" id="reanalyzeInput" />
+
+            <div id="selected_achievement_details"></div>
+            <div class="button-container">
+              <button id="analyzeButton" class="btn btn-primary">
+                Initialize
+              </button>
+
+              <button
+                id="reanalyzeButton"
+                class="btn btn-primary"
+                style="display: none"
+                onclick="setReanalyzeValue()"
+              >
+                Re-Analyze
+              </button>
+
+              <div id="loadingSpinner" style="display: none">
+                <img
+                  src="static/img/Pinwheel.gif"
+                  alt="Loading..."
+                  style="width: 50%; height: 70%"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">Achievement Details</h4>
+          </div>
+          <div
+            class="panel-body custom-outline"
+            style="max-height: 600px; overflow-y: auto"
+          >
+            <p id="achievementDetailsText"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">Subject Matters</h4>
+          </div>
+          <div
+            class="row custom-outline"
+            style="max-height: 700px; overflow-y: auto"
+          >
+            <div class="col-md-6">
+              <div class="panel-body">
+                <table class="steptable">
+                  <thead>
+                    <tr>
+                      <th>Subject Matter</th>
+                      <th>Select</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for cat, sub_cat in sub_categories.items() %} {% if
+                    loop.index % 2 == 1 %}
+                    <tr class="cat">
+                      <td colspan="3">{{ cat }}</td>
+                    </tr>
+                    {% for sub in sub_cat %}
+                    <tr class="sub_cat">
+                      <td>{{ sub }}</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="category_{{cat|lower}}_subcategory_{{sub|lower|replace(' ','')|replace(',','_')}}_checkbox"
+                        />
+                      </td>
+                    </tr>
+                    {% endfor %} {% endif %} {% endfor %}
+                    <!-- Add more rows for other categories and subcategories -->
+                  </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="panel-body">
+                <table class="steptable">
+                  <thead>
+                    <tr>
+                      <th>Subject Matter</th>
+                      <th>Select</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for cat, sub_cat in sub_categories.items() %} {% if
+                    loop.index % 2 == 0 %}
+                    <tr class="cat">
+                      <td colspan="3">{{ cat }}</td>
+                    </tr>
+                    {% for sub in sub_cat %}
+                    <tr class="sub_cat">
+                      <td>{{ sub }}</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          name="category_{{cat|lower}}_subcategory_{{sub|lower|replace(' ','')|replace(',','_')}}_checkbox"
+                        />
+                      </td>
+                    </tr>
+                    {% endfor %} {% endif %} {% endfor %}
+                    <!-- Add more rows for other categories and subcategories -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %} {% block scripts %}
+<script src="static/js/step3.js"></script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container" style="max-width: 70%">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Step 3: Subject Matter Consolidation</h4>
+    </div>
+    <div class="panel-body">
+      <form action="/step3/summary" method="POST">
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Subcategories</th>
+              <th>#1</th>
+              <th>#2</th>
+              <th>#3</th>
+              <th>#4</th>
+              <th>#5</th>
+              <th>#6</th>
+              <th>#7</th>
+              <th>#8</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set ns = namespace(counter=3) %} {% for category, subcategories
+            in sub_categories.items() %}
+            <tr>
+              <td colspan="12" class="cat bold-text">{{ category }}</td>
+            </tr>
+            {% for subcategory in subcategories %}
+            <tr>
+              <td>
+                <input
+                  type="checkbox"
+                  name="{{category|lower}}_{{subcategory|lower|replace(' ','')|replace(',','_')}}"
+                  value=""
+                />
+              </td>
+              <td>
+                <input
+                  type="hidden"
+                  name="{{subcategories[]}}"
+                  value="subcategory"
+                />
+                {{ subcategory }}
+              </td>
+              {% for i in range(8) %}
+              <td>
+                {% if data[i][ns.counter] == 1 %}<span style="color: green"
+                  >&#10004;</span
+                >{% else %}-{% endif %}
+              </td>
+              {% endfor %}
+              <td class="bold-text">{{ totals[ns.counter] }}</td>
+            </tr>
+            {% set ns.counter = ns.counter + 1 %} {% endfor %} {% endfor %}
+          </tbody>
+        </table>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

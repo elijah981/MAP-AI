@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Step 1: List Your Achievement Activities</h1>
+    <p>For this step, you need to list 20 achievement activities that you consider significant. These can be from any stage of your life. The goal is to understand what activities you find most satisfying and why.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Achievement Summary</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/step1" method="post">
+                        <div class="form-group">
+                            <label for="life_stage">Life Stage:</label>
+                            <select name="life_stage" id="life_stage" class="form-control">
+                                <!-- ... -->
+                                <option value="Childhood">Childhood</option>
+                                <option value="EarlyAdulthood">Early Adulthood</option>
+                                <option value="MiddleAdulthood">Middle Adulthood</option>
+                                <option value="LaterAdulthood">Later Adulthood</option>
+                                <!-- ... -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="achievement">Achievement Summary:</label>
+                            <textarea name="achievement" id="achievement" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Written Achievement Summaries</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Achievement #</th>
+                        <th>Life Stage</th>
+                        <th>Achievement</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in existing_entries %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ entry[1] }}</td>
+                        <td>{{ entry[2] }}</td>
+                        <td>
+                            <form action="/step1/delete/{{ entry[0] }}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add event listener to the select dropdown
+    document.getElementById("selected_achievement").addEventListener("change", function() {
+        var selectedAchievement = this.value;
+        fetchSelectedAchievement(selectedAchievement);
+    });
+
+        // Function to fetch and display the selected achievement details
+        function fetchSelectedAchievement(selectedAchievement) {
+        fetch(`/step1/achievement/${selectedAchievement}`)
+            .then(response => response.json())
+            .then(data => {
+                var selectedAchievementDetails = document.getElementById("selected_achievement_details");
+                selectedAchievementDetails.innerHTML = `
+                    <h4>Achievement #${selectedAchievement}</h4>
+                    <p>Life Stage: ${data.life_stage}</p>
+                    <p>Achievement: ${data.achievement}</p>
+                `;
+            })
+            .catch(error => console.log(error));
+    }
+</script>
+
+{% endblock %}
