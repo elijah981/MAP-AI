@@ -7,7 +7,7 @@ import openai
 
 class BaseAnalysis:
     def __init__(self):
-        openai.api_key = os.environ.get("OPENAI_API_KEY")
+        openai.api_key = os.environ.get("OPENAI_MAP_API_KEY")
         self.categories = []
         self.sub_categories = {}
 
